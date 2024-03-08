@@ -23,7 +23,7 @@ function FilesTable({
     })),
   );
   const [isProcessing, setIsProcessing] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
+  const [isPaused] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -70,7 +70,8 @@ function FilesTable({
   );
 
   window.electron.ipcRenderer.on('process-files-error', (error) => {
-    console.log('Error processing file!', error);
+    // eslint-disable-next-line no-alert
+    alert(`Error processing file: ${error}`);
   });
 
   return (
@@ -93,21 +94,36 @@ function FilesTable({
                   value={file.fileName}
                   onChange={(e) => handleChange(e, 'fileName', index)}
                   readOnly={!file.willCopy}
+                  style={{
+                    padding: '0.5rem 0.8rem',
+                  }}
                 />
               </td>
-              <td>
+              <td
+              // style={{
+              //   padding: '0 0.8rem',
+              //   display: 'flex',
+              //   alignItems: 'center',
+              //   justifyContent: 'center',
+              // }}
+              >
                 <input
                   type="checkbox"
                   checked={file.willCopy}
                   onChange={(e) => handleChange(e, 'willCopy', index)}
                 />
               </td>
-              <td>{file.isProcessed ? 'yay' : 'nay'}</td>
+              <td>{file.isProcessed ? '✓' : '✗'}</td>
             </tr>
           ))}
         </tbody>
       </table>
-      <button type="button" onClick={handleProcess} disabled={isProcessing}>
+      <button
+        type="button"
+        onClick={handleProcess}
+        disabled={isProcessing}
+        style={{ marginTop: '1rem' }}
+      >
         {isProcessing ? 'Processing...' : 'Process'}
       </button>
       {isProcessing && (

@@ -40,12 +40,23 @@ function Hello() {
   return (
     <div>
       <h1>Zip Processing App</h1>
-      <div>
+      <div
+        style={{
+          marginBottom: '1rem',
+        }}
+      >
         <button type="button" onClick={handleFileSelect}>
           {!selectedZipPath ? 'Select ZIP File' : 'Change ZIP File'}
         </button>
       </div>
-      <div>
+
+      <div
+        style={{
+          display: 'flex',
+          gap: '1rem',
+          marginBottom: '1rem',
+        }}
+      >
         <button
           type="button"
           onClick={handleDestinationSelect}
@@ -55,6 +66,7 @@ function Hello() {
         </button>
         {selectedDestination && <p>{selectedDestination}</p>}
       </div>
+
       {selectedZipPath && selectedDestination && files && (
         <FilesTable
           files={files}
